@@ -80,3 +80,25 @@
   background-color: #555555;
   border-radius: 10px;
 }
+
+.songList {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px;
+}
+
+.songItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  color: white;
+}
+
+.songItem strong {
+  font-size: 1.2em;
+  display: block;
+}
+
+.songItem + .songItem {
+  margin-top: 10px;
+}
+
