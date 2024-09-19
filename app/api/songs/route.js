@@ -1,14 +1,17 @@
-// /pages/api/songs/index.js
-import dbConnect from "@/lib/mongodb"; // Assuming dbConnect handles MongoDB connection
-import Song from "@/models/Song"; // Your Song model
+import dbConnect from "../../../lib/mongoDB";
+import Song from "@/models/Song"; // Assuming you have a Song model defined
 
 export default async function handler(req, res) {
-  await dbConnect();
+  await dbConnect(); // Connect to MongoDB
 
   if (req.method === "GET") {
-    const songs = await Song.find({});
-    res.status(200).json(songs);
+    try {
+      const songs = await Song.find(); // Fetch songs from MongoDB
+      res.status(200).json(songs);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch songs" });
+    }
   } else {
-    res.status(405).json({ message: "Method Not Allowed" });
+    res.status(405).json({ error: "Method not allowed" });
   }
 }
