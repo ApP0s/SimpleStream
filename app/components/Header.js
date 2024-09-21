@@ -6,6 +6,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.homeIcon}>🏠</div>
       <input type="text" className={styles.searchBar} placeholder="Search..." />
+      <div>Artists</div>
     </header>
   );
 };
