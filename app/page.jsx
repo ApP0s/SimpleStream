@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import SongList from "./components/SongList";
-import PlaylistList from "./components/PlaylistList";
+import Header from "./components/Header.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import SongList from "./components/SongList.jsx";
+import PlaylistList from "./components/PlaylistList.jsx";
 
 export default function Home() {
   const [songs, setSongs] = useState([]);
@@ -36,7 +36,7 @@ export default function Home() {
 
   // Function to delete a playlist (optional if you want to move the delete logic here)
   const deletePlaylist = (id) => {
-    fetch(`/api/playlists/${id}`, { method: "DELETE" })
+    fetch(`/api/playlists/?id=${id}`, { method: "DELETE" })
       .then(() => {
         setPlaylists((prevPlaylists) =>
           prevPlaylists.filter((playlist) => playlist._id !== id)

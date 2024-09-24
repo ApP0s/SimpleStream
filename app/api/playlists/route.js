@@ -1,5 +1,6 @@
-import Playlist from "@/models/Playlist";
+import Playlist from "../../../models/Playlist";
 import dbConnect from "../../../lib/mongoDB";
+import mongoose from 'mongoose';
 
 export async function GET(req) {
   try {
@@ -26,36 +27,18 @@ export async function POST(req) {
   }
 }
 
-export async function PUT(req) {
-  try {
-    await dbConnect();
-    const url = new URL(req.url); // Extract full URL
-    const id = url.pathname.split("/").pop(); // Get the ID from the URL
-    const body = await req.json();
-
-    const updatedPlaylist = await Playlist.findByIdAndUpdate(id, body, {
-      new: true,
-    });
-
-    if (!updatedPlaylist) {
-      return new Response(JSON.stringify({ error: "Playlist not found" }), {
-        status: 404,
-      });
-    }
-
-    return new Response(JSON.stringify(updatedPlaylist), { status: 200 });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-    });
-  }
-}
-
 export async function DELETE(req) {
   try {
     await dbConnect();
     const url = new URL(req.url);
-    const id = url.pathname.split("/").pop();
+    const id = url.searchParams.get('id');
+
+    // Check if the id is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new Response(JSON.stringify({ error: "Invalid Playlist ID" }), {
+        status: 400,
+      });
+    }
 
     const deletedPlaylist = await Playlist.findByIdAndDelete(id);
 
