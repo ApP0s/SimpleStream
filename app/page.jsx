@@ -5,6 +5,7 @@ import Header from "./components/Header.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import SongList from "./components/SongList.jsx";
 import PlaylistList from "./components/PlaylistList.jsx";
+import "./globals.css";
 
 export default function Home() {
   const [songs, setSongs] = useState([]);

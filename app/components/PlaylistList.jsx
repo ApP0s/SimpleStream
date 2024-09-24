@@ -1,4 +1,5 @@
 import styles from "@/app/page.module.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const PlaylistList = ({ playlists, deletePlaylist }) => {
   return (
@@ -9,7 +10,9 @@ const PlaylistList = ({ playlists, deletePlaylist }) => {
           {playlists.map((playlist) => (
             <li key={playlist._id}>
               <strong>{playlist.name}</strong>
-              <button onClick={() => deletePlaylist(playlist._id)}>Delete</button>
+              <button onClick={() => deletePlaylist(playlist._id)}>
+                <i className="bi bi-x-octagon-fill"></i> Delete
+              </button>
             </li>
           ))}
         </ul>

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(to bottom, #003366, #000);
+  background: linear-gradient(to bottom, var(--secondary-color), #000);
   margin: 20px;
 }
 
@@ -11,7 +11,7 @@
   left: 0;
   width: 100%;
   height: 50px;
-  background-color: #336699;
+  background-color: var(--primary-color);
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -19,9 +19,14 @@
   z-index: 1000;
 }
 
+.header div{
+  margin: 10px;
+  font-size: 20px;
+}
+
 .homeIcon {
   font-size: 24px;
-  color: white;
+  color: var(--text-color-light);
 }
 
 .searchBar {
@@ -33,20 +38,22 @@
 }
 
 .sidebar {
+  height: 100% ;
+  float: left;
   width: 60px;
-  background-color: #003366;
+  background-color: var(--secondary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
-  position: relative;
-  z-index: 999;
+  padding: 40px;
+  position: fixed;
+  z-index: 10;
 }
 
 .menuItem {
-  background-color: #336699;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
   font-size: 24px;
   padding: 10px;
   margin: 10px 0;
@@ -63,10 +70,28 @@
 }
 
 .mainContent {
-  background-color: #666666;
+  background-image: url('https://th.bing.com/th/id/R.a2577a2d5004ade3a2a89ef6827bf1a0?rik=CQ6RvwDmKqGXbQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f6%2ff%2f6%2f491123.jpg&ehk=muHFSbSb%2bLgPQDgo2ly7hZ1rdyP8gc7c7L4KAtgzl8E%3d&risl=&pid=ImgRaw&r=0');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
   flex: 1;
   margin: 20px;
-  border-radius: 10px;
+  height: 700px;
+  width: auto;
+  left: 60px;
+}
+
+
+.playlistContainer {
+  top: 20px;
+  position: relative;
+  padding: 20px;
+  margin: 10px;
+  text-align: left;
+  background-color: hsl(222, 22%, 69%);
+  z-index: 1;
+  left: 70px;
 }
 
 .bottomSection {
@@ -78,7 +103,7 @@
 .bottomItem {
   width: 100px;
   height: 100px;
-  background-color: #555555;
+  background-color: var(--accent-color);
   border-radius: 10px;
 }
 
@@ -91,7 +116,7 @@
 .songItem {
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  color: white;
+  color: var(--text-color-light);
 }
 
 .songItem strong {
@@ -101,4 +126,22 @@
 
 .songItem + .songItem {
   margin-top: 10px;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+}
+
+.delete-button .bi {
+  font-size: 24px;
+  margin-right: 5px; /* Adjust spacing between icon and text */
 }
