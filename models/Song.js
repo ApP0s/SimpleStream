@@ -11,11 +11,11 @@ const SongSchema = new mongoose.Schema({
   },
   album: {
     type: String,
-    required: false, // or true if you want this field to be mandatory
+    required: false, 
   },
   year: {
     type: Number,
-    required: false, // or true depending on your requirement
+    required: false,
   },
 });
 

@@ -2,7 +2,7 @@
   display: flex;
   height: 100vh;
   background: linear-gradient(to bottom, #003366, #000);
-  margin: 20px;
+  margin: 0; /* Remove margin from the container for cleaner layout */
 }
 
 .header {
@@ -33,13 +33,13 @@
 }
 
 .sidebar {
-  width: 60px;
+  width: 80px; /* Increased width for better spacing */
   background-color: #003366;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 20px 0;
   position: relative;
   z-index: 999;
 }
@@ -48,25 +48,33 @@
   background-color: #336699;
   color: white;
   font-size: 24px;
-  padding: 10px;
+  padding: 12px 16px;
   margin: 10px 0;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menuItem:hover {
+  background-color: #285e8e; /* Slight hover effect */
 }
 
 .main {
   flex: 1;
-  margin-left: 60px;
+  margin-left: 80px; /* Adjusted to match the new sidebar width */
   padding-top: 50px;
   display: flex;
   flex-direction: column;
+  background-color: #1a1a1a; /* Slightly darker background for the main content */
 }
 
 .mainContent {
-  background-color: #666666;
+  background-color: #4d4d4d; /* Lighter shade for content */
   flex: 1;
   margin: 20px;
+  padding: 20px;
   border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .bottomSection {
@@ -89,9 +97,15 @@
 }
 
 .songItem {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  color: white;
+  padding: 15px;
+  background-color: #444;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.songItem:hover {
+  background-color: #555; /* Add a hover effect to song items */
 }
 
 .songItem strong {
@@ -99,6 +113,6 @@
   display: block;
 }
 
-.songItem + .songItem {
-  margin-top: 10px;
+.songItem span {
+  color: #bbb; /* Light color for artist names */
 }
