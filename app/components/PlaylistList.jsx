@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from "@/app/page.module.css";
+<<<<<<< HEAD
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -18,6 +19,9 @@ const style = {
 };
 
 
+=======
+import 'bootstrap-icons/font/bootstrap-icons.css';
+>>>>>>> SkyDev
 
 const PlaylistList = ({ playlists, deletePlaylist }) => {
   const [open, setOpen] = React.useState(false);
@@ -32,6 +36,7 @@ const PlaylistList = ({ playlists, deletePlaylist }) => {
             <li key={playlist._id}>
               <strong>{playlist.name}</strong>
               <button onClick={() => deletePlaylist(playlist._id)}>
+<<<<<<< HEAD
                 Delete
               </button>
               <Button onClick={handleOpen}>Open modal</Button>
@@ -55,6 +60,10 @@ const PlaylistList = ({ playlists, deletePlaylist }) => {
                   </Typography>
                 </Box>
               </Modal>
+=======
+                <i className="bi bi-x-octagon-fill"></i> Delete
+              </button>
+>>>>>>> SkyDev
             </li>
           ))}
         </ul>

@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.1",
+=======
+    "bootstrap-icons": "^1.11.3",
+>>>>>>> SkyDev
     "dotenv": "^16.4.5",
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.3",
