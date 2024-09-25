@@ -1,8 +1,8 @@
 .container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(to bottom, #003366, #000);
-  margin: 0; /* Remove margin from the container for cleaner layout */
+  background: linear-gradient(to bottom, var(--secondary-color), #000);
+  margin: 20px;
 }
 
 .header {
@@ -11,17 +11,22 @@
   left: 0;
   width: 100%;
   height: 50px;
-  background-color: #336699;
+  background-color: var(--primary-color);
   display: flex;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
   z-index: 1000;
+}
+
+.header div{
+  margin: 10px;
+  font-size: 20px;
 }
 
 .homeIcon {
   font-size: 24px;
-  color: white;
+  color: var(--text-color-light);
 }
 
 .searchBar {
@@ -33,48 +38,60 @@
 }
 
 .sidebar {
-  width: 80px; /* Increased width for better spacing */
-  background-color: #003366;
+  height: 100% ;
+  float: left;
+  width: 60px;
+  background-color: var(--secondary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px 0;
-  position: relative;
-  z-index: 999;
+  padding: 40px;
+  position: fixed;
+  z-index: 10;
 }
 
 .menuItem {
-  background-color: #336699;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
   font-size: 24px;
-  padding: 12px 16px;
+  padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.menuItem:hover {
-  background-color: #285e8e; /* Slight hover effect */
 }
 
 .main {
   flex: 1;
-  margin-left: 80px; /* Adjusted to match the new sidebar width */
+  margin-left: 60px;
   padding-top: 50px;
   display: flex;
   flex-direction: column;
-  background-color: #1a1a1a; /* Slightly darker background for the main content */
 }
 
 .mainContent {
-  background-color: #4d4d4d; /* Lighter shade for content */
+  background-image: url('https://th.bing.com/th/id/R.a2577a2d5004ade3a2a89ef6827bf1a0?rik=CQ6RvwDmKqGXbQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f6%2ff%2f6%2f491123.jpg&ehk=muHFSbSb%2bLgPQDgo2ly7hZ1rdyP8gc7c7L4KAtgzl8E%3d&risl=&pid=ImgRaw&r=0');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
   flex: 1;
   margin: 20px;
+  height: 700px;
+  width: auto;
+  left: 60px;
+}
+
+
+.playlistContainer {
+  top: 20px;
+  position: relative;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  text-align: left;
+  background-color: hsl(222, 22%, 69%);
+  z-index: 1;
+  left: 70px;
 }
 
 .bottomSection {
@@ -86,7 +103,7 @@
 .bottomItem {
   width: 100px;
   height: 100px;
-  background-color: #555555;
+  background-color: var(--accent-color);
   border-radius: 10px;
 }
 
@@ -97,15 +114,9 @@
 }
 
 .songItem {
-  padding: 15px;
-  background-color: #444;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.songItem:hover {
-  background-color: #555; /* Add a hover effect to song items */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  color: var(--text-color-light);
 }
 
 .songItem strong {
@@ -113,6 +124,24 @@
   display: block;
 }
 
-.songItem span {
-  color: #bbb; /* Light color for artist names */
+.songItem + .songItem {
+  margin-top: 10px;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+}
+
+.delete-button .bi {
+  font-size: 24px;
+  margin-right: 5px; /* Adjust spacing between icon and text */
 }
