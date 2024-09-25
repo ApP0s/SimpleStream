@@ -8,7 +8,6 @@ importers:
 
   .:
     dependencies:
-<<<<<<< HEAD
       '@emotion/react':
         specifier: ^11.13.3
         version: 11.13.3(@types/react@18.3.9)(react@18.3.1)
@@ -18,11 +17,6 @@ importers:
       '@mui/material':
         specifier: ^6.1.1
         version: 6.1.1(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-=======
-      bootstrap-icons:
-        specifier: ^1.11.3
-        version: 1.11.3
->>>>>>> SkyDev
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -565,9 +559,6 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-
-  bootstrap-icons@1.11.3:
-    resolution: {integrity: sha512-+3lpHrCw/it2/7lBL15VR0HEumaBss0+f/Lb6ZvHISn1mlK83jjFpooTLsMWbIjJMDjDjOExMsTxnXSIT4k4ww==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -2374,8 +2365,6 @@ snapshots:
       resolve: 1.22.8
 
   balanced-match@1.0.2: {}
-
-  bootstrap-icons@1.11.3: {}
 
   brace-expansion@1.1.11:
     dependencies:
