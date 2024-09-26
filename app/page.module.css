@@ -1,33 +1,21 @@
 .container {
   display: flex;
-  height: 100vh;
-  background: linear-gradient(to bottom, var(--secondary-color), #000);
-  margin: 20px;
+  flex-direction: column;
+  padding: 20px; /* Add padding for better spacing */
+  width: 100%;
+  background-color: #f5f5f5; /* Light gray background to differentiate the section */
+}
+
+.heading {
+  text-align: left;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background-color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.header div p{
   margin: 10px;
   font-size: 20px;
-  flex: 1;
-}
-
-.header .searchBar {
-  padding: 10px;
-  margin: 10px;
 }
 
 .homeIcon {
@@ -35,27 +23,7 @@
   color: var(--text-color-light);
 }
 
-.searchBar {
-  margin-left: 20px;
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  width: 250px;
-}
 
-.sidebar {
-  height: 100% ;
-  float: left;
-  width: 60px;
-  background-color: var(--secondary-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px;
-  position: fixed;
-  z-index: 10;
-}
 
 .menuItem {
   background-color: var(--primary-color);
@@ -138,9 +106,11 @@
 }
 
 .songList {
+  padding: 10px;
+  margin: 10px 0; /* Ensure some margin between the heading and list */
   list-style-type: none;
-  padding: 0;
-  margin: 20px;
+  width: 100%;
+  min-height: 100px; /* Ensure the list has some height */
 }
 
 .songItem {

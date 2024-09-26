@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import SongItem from "./SongItem"; // Make sure SongItem is correctly imported
-import styles from "@/app/page.module.css"; // Adjust your CSS file if needed
+import { useState, useEffect } from 'react'; // Make sure useState and useEffect are imported
+import SongItem from './SongItem'; // Ensure SongItem is correctly imported
+import styles from '@/app/page.module.css'; // Import the CSS module
 
 const SongList = () => {
-  const [songs, setSongs] = useState([]); // Initialize with an empty array
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     fetch("/api/songs")
@@ -13,8 +13,8 @@ const SongList = () => {
   }, []);
 
   return (
-    <div className={styles.mainContent}>
-      <h2>Song List</h2>
+    <div className={styles.container}>
+      <h2 className={styles.heading}>Song List</h2>
       {songs.length > 0 ? (
         <ul className={styles.songList}>
           {songs.map((song) => (
@@ -29,4 +29,3 @@ const SongList = () => {
 };
 
 export default SongList;
-

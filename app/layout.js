@@ -1,26 +1,14 @@
-import localFont from "next/font/local";
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
-export const metadata = {
-  title: "SimpleStream",
-  description: "Listen to music!",
-};
+import Header from "@/app/components/Header"; // Adjust the import according to your structure
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <title>SimpleStream</title> {/* You can include the title here */}
+        {/* Other head elements like meta tags can go here */}
+      </head>
+      <body>
+        <Header />
         {children}
       </body>
     </html>
