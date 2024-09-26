@@ -15,13 +15,19 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
-.header div{
+.header div p{
   margin: 10px;
   font-size: 20px;
+  flex: 1;
+}
+
+.header .searchBar {
+  padding: 10px;
+  margin: 10px;
 }
 
 .homeIcon {
@@ -70,7 +76,7 @@
 }
 
 .mainContent {
-  background-image: url('https://th.bing.com/th/id/R.a2577a2d5004ade3a2a89ef6827bf1a0?rik=CQ6RvwDmKqGXbQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f6%2ff%2f6%2f491123.jpg&ehk=muHFSbSb%2bLgPQDgo2ly7hZ1rdyP8gc7c7L4KAtgzl8E%3d&risl=&pid=ImgRaw&r=0');
+  background-image: linear-gradient(black, rgb(75, 75, 248)) ;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -82,6 +88,15 @@
   left: 60px;
 }
 
+.mainContent ul{
+  padding: 10px;
+  width: 200px;
+  height: 300px;
+  background-color: rgb(34, 33, 31);
+  border-radius: 10px;
+  flex: 1;
+}
+
 
 .playlistContainer {
   top: 20px;
@@ -89,9 +104,24 @@
   padding: 20px;
   margin: 10px;
   text-align: left;
-  background-color: hsl(222, 22%, 69%);
+  background-color: black;
   z-index: 1;
   left: 70px;
+}
+
+.playlistContainer button{
+  background-color: red;
+  size: 20px;
+  margin: 10px;
+  border-radius: 5px ;
+}
+
+.playlistContainer div{
+  padding: 10px;
+  width: 200px;
+  height: 40%;
+  background-color: rgb(34, 33, 31);
+  border-radius: 10px;
 }
 
 .bottomSection {
