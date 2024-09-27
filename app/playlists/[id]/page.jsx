@@ -1,39 +1,54 @@
-"use client";
+"use client"; // Marking this component as a Client Component
 
-import { useEffect, useState } from "react";
-import PlaylistList from "@/app/components/PlaylistList";
-import "./globals.css";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Use next/navigation for router
 
+const PlaylistDetail = () => {
+  const router = useRouter();
+  const [playlist, setPlaylist] = useState(null);
+  const [loadingId, setLoadingId] = useState(true);
+  const [id, setId] = useState(null);
 
-export default function Playlist() {
-  // Fetch playlists from the API
   useEffect(() => {
-    fetch("/api/playlists")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setPlaylists(data); // Only set playlists if the response is an array
+    if (router.isReady) {
+      const { id: playlistId } = router.query; // Destructure the id from router.query
+      console.log("Playlist ID:", playlistId); // Log the playlist ID
+      setId(playlistId);
+      setLoadingId(false);
+    }
+  }, [router.isReady, router.query]);
+
+  useEffect(() => {
+    if (id) {
+      const fetchPlaylist = async () => {
+        try {
+          const response = await fetch(`/api/playlists/${id}`); // Ensure this matches your API route
+          console.log("Response status:", response.status); // Log the response status
+          if (!response.ok) throw new Error("Failed to fetch playlist");
+          const data = await response.json();
+          console.log("Fetched playlist data:", data); // Log the fetched data
+          setPlaylist(data);
+        } catch (error) {
+          console.error("Error fetching playlist:", error);
         }
-      })
-      .catch((error) => console.error("Error fetching playlists:", error));
-  }, []);
+      };
+      fetchPlaylist();
+    }
+  }, [id]);
 
-  // Function to add a new playlist
-  const addPlaylist = (newPlaylist) => {
-    setPlaylists((prevPlaylists) => [...prevPlaylists, newPlaylist]);
-  };
+  if (loadingId) return <div>Loading...</div>;
+  if (!playlist) return <div>Loading playlist data...</div>;
 
-  // Function to delete a playlist (optional if you want to move the delete logic here)
-  const deletePlaylist = (id) => {
-    fetch(`/api/playlists/?id=${id}`, { method: "DELETE" })
-      .then(() => {
-        setPlaylists((prevPlaylists) =>
-          prevPlaylists.filter((playlist) => playlist._id !== id)
-        );
-      })
-      .catch((error) => console.error("Error deleting playlist:", error));
-  };
   return (
-    <PlaylistList playlists={playlists} deletePlaylist={deletePlaylist} />
-  )
-}
+    <div>
+      <h1>{playlist.name}</h1>
+      <ul>
+        {playlist.songs.map((song) => (
+          <li key={song._id}>{song.title} by {song.artist}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default PlaylistDetail;

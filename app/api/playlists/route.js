@@ -33,7 +33,7 @@ export async function DELETE(req) {
     const url = new URL(req.url);
     const id = url.searchParams.get('id');
 
-    // Check if the id is a valid ObjectId
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return new Response(JSON.stringify({ error: "Invalid Playlist ID" }), {
         status: 400,

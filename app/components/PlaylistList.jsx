@@ -13,13 +13,18 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Checkbox,
 } from "@mui/material";
 import styles from "@/app/page.module.css";
 
 const PlaylistList = () => {
   const [playlists, setPlaylists] = useState([]);
+  const [songs, setSongs] = useState([]); // Available songs
   const [editingPlaylist, setEditingPlaylist] = useState(null);
   const [newName, setNewName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddSongsOpen, setIsAddSongsOpen] = useState(false); // Track add songs modal
+  const [selectedSongs, setSelectedSongs] = useState([]); // Store selected songs
 
   // Fetch playlists from the API
   const fetchPlaylists = async () => {
@@ -33,40 +38,66 @@ const PlaylistList = () => {
     }
   };
 
+  // Fetch available songs
+  const fetchSongs = async () => {
+    try {
+      const response = await fetch("/api/songs");
+      if (!response.ok) throw new Error("Failed to fetch songs");
+      const data = await response.json();
+      setSongs(data);
+    } catch (error) {
+      console.error("Error fetching songs:", error);
+    }
+  };
+
   useEffect(() => {
     fetchPlaylists();
+    fetchSongs();
   }, []);
 
   const handleEditOpen = (playlist) => {
     setEditingPlaylist(playlist);
     setNewName(playlist.name);
+    setIsModalOpen(true);
   };
 
-  const handleEditClose = () => {
+  const handleCreateOpen = () => {
+    setNewName("");
+    setEditingPlaylist(null);
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
     setEditingPlaylist(null);
     setNewName("");
   };
 
   const handleSaveClick = async () => {
     if (!editingPlaylist) return;
-
+  
     try {
       const response = await fetch(`/api/playlists/${editingPlaylist._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: newName }),
+        body: JSON.stringify({
+          name: newName,
+          songs: selectedSongs, // Ensure selectedSongs contains the intended songs
+        }),
       });
-
+  
       if (response.ok) {
         const updatedPlaylist = await response.json();
+        console.log("Updated Playlist:", updatedPlaylist); // Log the updated playlist
+  
         setPlaylists((prevPlaylists) =>
           prevPlaylists.map((playlist) =>
             playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
           )
         );
-        handleEditClose();
+        handleClose(); // Close modal after saving
       } else {
         console.error("Failed to update playlist");
       }
@@ -74,7 +105,30 @@ const PlaylistList = () => {
       console.error("Error updating playlist:", error);
     }
   };
+  
 
+  const handleCreate = async () => {
+    try {
+      const response = await fetch("/api/playlists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      if (response.ok) {
+        const newPlaylist = await response.json();
+        setPlaylists((prev) => [...prev, newPlaylist]);
+        handleClose(); // Close modal after creating
+        setNewName(""); // Reset new name
+      } else {
+        console.error("Failed to create playlist");
+      }
+    } catch (error) {
+      console.error("Error creating playlist:", error);
+    }
+  };
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`/api/playlists?id=${id}`, {
@@ -93,31 +147,47 @@ const PlaylistList = () => {
     }
   };
 
-  const handleCreateOpen = () => {
-    setNewName("");
-    setEditingPlaylist(null); // Ensure no playlist is being edited
+  const handleAddSongsOpen = (playlist) => {
+    setEditingPlaylist(playlist);
+    setSelectedSongs(playlist.songs || []); // Preselect current songs in playlist
+    setIsAddSongsOpen(true); // Open add songs modal
   };
 
-  const handleCreate = async () => {
+  const handleAddSongsClose = () => {
+    setIsAddSongsOpen(false);
+  };
+
+  const handleSongSelect = (songId) => {
+    setSelectedSongs((prev) =>
+      prev.includes(songId)
+        ? prev.filter((id) => id !== songId)
+        : [...prev, songId]
+    );
+  };
+
+  const handleAddSongsToPlaylist = async () => {
     try {
-      const response = await fetch("/api/playlists", {
-        method: "POST",
+      const response = await fetch(`/api/playlists/${editingPlaylist._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: newName }),
+        body: JSON.stringify({ songs: selectedSongs }), // Send updated songs array
       });
 
       if (response.ok) {
-        const newPlaylist = await response.json();
-        setPlaylists((prev) => [...prev, newPlaylist]);
-        handleEditClose(); // Close modal after creating
-        setNewName(""); // Reset new name
+        const updatedPlaylist = await response.json();
+        setPlaylists((prev) =>
+          prev.map((playlist) =>
+            playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
+          )
+        );
+        handleAddSongsClose(); // Close modal after saving
       } else {
-        console.error("Failed to create playlist");
+        console.error("Failed to update playlist");
       }
     } catch (error) {
-      console.error("Error creating playlist:", error);
+      console.error("Error updating playlist:", error);
     }
   };
 
@@ -165,6 +235,14 @@ const PlaylistList = () => {
                     >
                       Delete
                     </Button>
+                    <Button
+                      variant="outlined"
+                      color="default"
+                      onClick={() => handleAddSongsOpen(playlist)} // Open add songs modal
+                      style={{ marginLeft: "8px" }}
+                    >
+                      Add Songs
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -180,8 +258,10 @@ const PlaylistList = () => {
       </TableContainer>
 
       {/* MUI Modal for Editing or Creating Playlist */}
-      <Dialog open={!!editingPlaylist || newName !== ""} onClose={handleEditClose}>
-        <DialogTitle>{editingPlaylist ? "Edit Playlist" : "Create Playlist"}</DialogTitle>
+      <Dialog open={isModalOpen} onClose={handleClose}>
+        <DialogTitle>
+          {editingPlaylist ? "Edit Playlist" : "Create Playlist"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -194,7 +274,7 @@ const PlaylistList = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleEditClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button
@@ -202,6 +282,30 @@ const PlaylistList = () => {
             color="primary"
           >
             {editingPlaylist ? "Save" : "Create"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* MUI Modal for Adding Songs to Playlist */}
+      <Dialog open={isAddSongsOpen} onClose={handleAddSongsClose}>
+        <DialogTitle>Add Songs to Playlist</DialogTitle>
+        <DialogContent>
+          {songs.map((song) => (
+            <div key={song._id}>
+              <Checkbox
+                checked={selectedSongs.includes(song._id)}
+                onChange={() => handleSongSelect(song._id)}
+              />
+              {song.title} by {song.artist}
+            </div>
+          ))}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddSongsClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleAddSongsToPlaylist} color="primary">
+            Add Songs
           </Button>
         </DialogActions>
       </Dialog>
