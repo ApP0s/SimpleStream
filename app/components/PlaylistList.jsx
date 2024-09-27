@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -75,7 +76,7 @@ const PlaylistList = () => {
 
   const handleSaveClick = async () => {
     if (!editingPlaylist) return;
-  
+
     try {
       const response = await fetch(`/api/playlists/${editingPlaylist._id}`, {
         method: "PUT",
@@ -87,11 +88,11 @@ const PlaylistList = () => {
           songs: selectedSongs, // Ensure selectedSongs contains the intended songs
         }),
       });
-  
+
       if (response.ok) {
         const updatedPlaylist = await response.json();
         console.log("Updated Playlist:", updatedPlaylist); // Log the updated playlist
-  
+
         setPlaylists((prevPlaylists) =>
           prevPlaylists.map((playlist) =>
             playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
@@ -105,7 +106,6 @@ const PlaylistList = () => {
       console.error("Error updating playlist:", error);
     }
   };
-  
 
   const handleCreate = async () => {
     try {
@@ -218,7 +218,12 @@ const PlaylistList = () => {
             {playlists.length > 0 ? (
               playlists.map((playlist) => (
                 <TableRow key={playlist._id}>
-                  <TableCell>{playlist.name}</TableCell>
+                  <TableCell>
+                    <Link href={`/playlists/${playlist._id}`}>
+                      {playlist.name}
+                    </Link>{" "}
+                    {/* Make name a link */}
+                  </TableCell>
                   <TableCell align="right">
                     <Button
                       variant="outlined"

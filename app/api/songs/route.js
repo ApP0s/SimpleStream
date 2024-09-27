@@ -4,7 +4,14 @@ import Song from "../../../models/Song";
 export async function GET(req) {
   try {
     await dbConnect();
-    const songs = await Song.find({}); // Fetch all songs from the database
+
+    // Extract query parameters
+    const url = new URL(req.url);
+    const artistId = url.searchParams.get('artist'); // Get artist ID from query params
+
+    // If artistId is provided, filter by artist; otherwise, fetch all songs
+    const songs = await Song.find(artistId ? { artist: artistId } : {}).populate('artist');
+
     return new Response(JSON.stringify(songs), {
       headers: { "Content-Type": "application/json" },
     });
@@ -15,7 +22,6 @@ export async function GET(req) {
     });
   }
 }
-
 
 export async function POST(req) {
   try {
@@ -36,3 +42,4 @@ export async function POST(req) {
     });
   }
 }
+

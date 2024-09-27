@@ -1,9 +1,12 @@
+// models/Artist.js
 import mongoose from 'mongoose';
 
 const ArtistSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  genre: { type: String },
-  photo: { type: String },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
-export default mongoose.models.Artist || mongoose.model('Artist', ArtistSchema);
+const Artist = mongoose.models.Artist || mongoose.model('Artist', ArtistSchema);
+export default Artist;

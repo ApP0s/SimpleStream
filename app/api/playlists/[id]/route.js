@@ -1,6 +1,5 @@
 import Playlist from "@/models/Playlist";
 import dbConnect from "@/lib/mongoDB";
-import mongoose from "mongoose"; // Make sure to import mongoose to use ObjectId
 
 export async function PUT(req) {
   try {
@@ -34,23 +33,16 @@ export async function PUT(req) {
 }
 
 
-export async function GET(req) {
+export async function GET(req, { params }) {
+  const { id } = params; // Get the playlist ID from the URL
   try {
     await dbConnect();
-    const url = new URL(req.url);
-    const id = url.pathname.split("/").pop(); // Extract the playlist ID
-
-    const playlist = await Playlist.findById(id).populate("songs"); // Fetch the playlist and populate songs
+    const playlist = await Playlist.findById(id).populate('songs'); // Populate song details if needed
     if (!playlist) {
-      return new Response(JSON.stringify({ error: "Playlist not found" }), {
-        status: 404,
-      });
+      return new Response(JSON.stringify({ error: "Playlist not found" }), { status: 404 });
     }
-
-    return new Response(JSON.stringify(playlist), { status: 200 });
+    return new Response(JSON.stringify(playlist), { headers: { "Content-Type": "application/json" } });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-    });
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }
