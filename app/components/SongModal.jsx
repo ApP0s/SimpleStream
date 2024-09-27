@@ -1,5 +1,3 @@
-// components/SongModal.jsx
-
 import React, { useState, useEffect } from 'react';
 import {
   Dialog,
@@ -16,13 +14,14 @@ const SongModal = ({ isOpen, onClose, onSubmit, song }) => {
     artist: '',
     album: '',
     year: '',
+    songFile: null, // Add songFile to state
   });
 
   useEffect(() => {
     if (song) {
       setSongDetails(song); // If a song is passed for editing, set its details
     } else {
-      setSongDetails({ title: '', artist: '', album: '', year: '' }); // Reset for creating a new song
+      setSongDetails({ title: '', artist: '', album: '', year: '', songFile: null }); // Reset for creating a new song
     }
   }, [song]);
 
@@ -31,10 +30,38 @@ const SongModal = ({ isOpen, onClose, onSubmit, song }) => {
     setSongDetails({ ...songDetails, [name]: value });
   };
 
-  const handleSubmit = () => {
-    onSubmit(songDetails);
-    onClose(); // Close the modal after submitting
+  const handleFileChange = (e) => {
+    setSongDetails({ ...songDetails, songFile: e.target.files[0] }); // Update songFile
   };
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData();
+  formData.append('songFile', selectedFile); // Ensure selectedFile is the actual file object
+  formData.append('title', songDetails.title);
+  formData.append('artist', songDetails.artist);
+  formData.append('album', songDetails.album);
+  formData.append('year', songDetails.year);
+
+  try {
+    const response = await fetch('/api/songs', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const newSong = await response.json();
+    console.log("New song created:", newSong);
+  } catch (error) {
+    console.error("Error creating song:", error);
+  }
+};
+
+  
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
@@ -72,6 +99,11 @@ const SongModal = ({ isOpen, onClose, onSubmit, song }) => {
           value={songDetails.year}
           onChange={handleChange}
           fullWidth
+        />
+        <input
+          type="file"
+          onChange={handleFileChange}
+          required // Make it required
         />
       </DialogContent>
       <DialogActions>
