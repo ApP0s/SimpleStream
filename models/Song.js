@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const SongSchema = new mongoose.Schema({
   title: {
@@ -6,17 +6,18 @@ const SongSchema = new mongoose.Schema({
     required: true,
   },
   artist: {
-    type: mongoose.Schema.Types.ObjectId, // Reference to the Artist model
-    ref: 'Artist', // Name of the model being referenced
+    type: String,
     required: true,
   },
   album: {
     type: String,
+    required: false, 
   },
   year: {
     type: Number,
+    required: false,
   },
 });
 
-const Song = mongoose.models.Song || mongoose.model('Song', SongSchema);
+const Song = mongoose.models.Song || mongoose.model("Song", SongSchema);
 export default Song;

@@ -91,17 +91,15 @@ const SongList = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm("Are you sure you want to delete this song?")) {
-      try {
-        const response = await fetch(`/api/songs/${id}`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          setSongs((prev) => prev.filter((song) => song._id !== id));
-        }
-      } catch (error) {
-        console.error("Error:", error);
+    try {
+      const response = await fetch(`/api/songs/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setSongs((prev) => prev.filter((song) => song._id !== id));
       }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -112,7 +110,7 @@ const SongList = () => {
         variant="contained"
         color="primary"
         onClick={() => handleOpen()}
-        sx={{ margin: 2 }}
+        sx={{ margin: 2 }} // Adds margin around the button
       >
         Add Song
       </Button>
