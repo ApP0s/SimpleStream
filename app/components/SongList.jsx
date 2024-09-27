@@ -15,6 +15,12 @@ import {
   TextField,
 } from "@mui/material";
 import styles from "@/app/page.module.css";
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const SongList = () => {
   const [songs, setSongs] = useState([]);
@@ -118,10 +124,10 @@ const SongList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="song list table">
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Artist</TableCell>
-              <TableCell>Year</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Title<LibraryMusicIcon /></TableCell>
+              <TableCell>Artist<AccountCircleRoundedIcon /></TableCell>
+              <TableCell>Year<CalendarMonthIcon /></TableCell>
+              <TableCell>Actions<AddReactionIcon /></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -138,15 +144,16 @@ const SongList = () => {
                       variant="contained"
                       color="secondary"
                       onClick={() => handleOpen(song)}
+                      sx={{ marginRight: 1 }}
                     >
-                      Edit
+                      Edit<BorderColorIcon />
                     </Button>
                     <Button
                       variant="contained"
                       color="error"
                       onClick={() => handleDelete(song._id)}
                     >
-                      Delete
+                      Delete<DeleteOutlineIcon/>
                     </Button>
                   </TableCell>
                 </TableRow>

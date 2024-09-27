@@ -17,6 +17,11 @@ import {
   Checkbox,
 } from "@mui/material";
 import styles from "@/app/page.module.css";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import LyricsIcon from '@mui/icons-material/Lyrics';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+import GroupIcon from '@mui/icons-material/Group';
 
 const PlaylistList = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -207,10 +212,10 @@ const PlaylistList = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <strong>Name</strong>
+                <strong>Name <GroupIcon /></strong>
               </TableCell>
               <TableCell align="right">
-                <strong>Actions</strong>
+                <strong>Actions<AddReactionIcon /></strong>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -231,14 +236,14 @@ const PlaylistList = () => {
                       onClick={() => handleEditOpen(playlist)}
                       style={{ marginRight: "8px" }}
                     >
-                      Edit
+                      Edit <BorderColorIcon />
                     </Button>
                     <Button
                       variant="outlined"
                       color="secondary"
                       onClick={() => handleDelete(playlist._id)}
                     >
-                      Delete
+                      Delete <DeleteOutlineIcon />
                     </Button>
                     <Button
                       variant="outlined"
@@ -246,7 +251,7 @@ const PlaylistList = () => {
                       onClick={() => handleAddSongsOpen(playlist)} // Open add songs modal
                       style={{ marginLeft: "8px" }}
                     >
-                      Add Songs
+                      Add Songs <LyricsIcon />
                     </Button>
                   </TableCell>
                 </TableRow>
