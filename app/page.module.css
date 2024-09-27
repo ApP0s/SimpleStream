@@ -66,31 +66,8 @@
 }
 
 
-.playlistContainer {
-  top: 20px;
-  position: relative;
-  padding: 20px;
-  margin: 10px;
-  text-align: left;
-  background-color: black;
-  z-index: 1;
-  left: 70px;
-}
 
-.playlistContainer button{
-  background-color: red;
-  size: 20px;
-  margin: 10px;
-  border-radius: 5px ;
-}
 
-.playlistContainer div{
-  padding: 10px;
-  width: 200px;
-  height: 40%;
-  background-color: rgb(34, 33, 31);
-  border-radius: 10px;
-}
 
 .bottomSection {
   display: flex;

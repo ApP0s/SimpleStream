@@ -2,8 +2,10 @@
 
 import PlaylistList from "@/app/components/PlaylistList";
 
-export default function playlists () {
-    return (
-        <h1>Hello</h1>
-    )
+export default function Playlists() {
+  return (
+    <div>
+      <PlaylistList />
+    </div>
+  );
 }

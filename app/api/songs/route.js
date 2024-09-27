@@ -1,5 +1,4 @@
 import dbConnect from "../../../lib/mongoDB";
-
 import Song from "../../../models/Song";
 
 export async function GET(req) {
