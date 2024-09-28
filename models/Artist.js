@@ -6,7 +6,12 @@ const ArtistSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bio: {
+    type: String,
+  },
+  genres: {
+    type: [String],
+  },
 });
 
-const Artist = mongoose.models.Artist || mongoose.model('Artist', ArtistSchema);
-export default Artist;
+export default mongoose.models.Artist || mongoose.model('Artist', ArtistSchema);
