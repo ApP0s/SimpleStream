@@ -1,3 +1,31 @@
+# SimpleStream Project
+
+## Team Members
+- CHATCHAI BUMRUNGSAK (https://github.com/ApP0s)
+- BOONYARIT THONGMA (https://github.com/Rollupadopt)
+
+## Project Description
+SimpleStream is a streaming app that allows users to perform CRUD operations via a REST API. The app includes a Home page, Playlist, and Artists sections.
+
+## Technologies and Tools
+- !Emotion React
+- !Emotion Styled
+- !MUI Icons Material
+- !MUI Material
+- !Bootstrap
+- !Dotenv
+- !MongoDB
+- !Mongoose
+- !Next.js
+- !React
+- !React Bootstrap
+- !React DOM
+
+## Screenshots
+!Home Page
+!Playlist Page
+!Artists Page
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
