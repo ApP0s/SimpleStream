@@ -1,28 +1,44 @@
-// app/api/artists/route.js
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongoDB';
 import Artist from '@/models/Artist';
+import Song from '@/models/Song';
 
-export async function GET() {
+export async function POST(request) {
+  await dbConnect();
+
   try {
-    await dbConnect();
+    const body = await request.json();
+    const { name, bio, genres } = body;
 
-    const artists = await Artist.find({});
-    return NextResponse.json({ success: true, data: artists });
+    // Create the new artist
+    const newArtist = await Artist.create({ name, bio, genres });
+
+    // Find all songs by this artist
+    const artistSongs = await Song.find({ artist: name });
+
+    // Update the artist document to include these songs
+    if (artistSongs.length > 0) {
+      const songIds = artistSongs.map(song => song._id);
+      await Artist.findByIdAndUpdate(newArtist._id, { $push: { songs: { $each: songIds } } });
+    }
+
+    // Fetch the updated artist document
+    const updatedArtist = await Artist.findById(newArtist._id).populate('songs');
+
+    return NextResponse.json(updatedArtist, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
 }
 
-export async function POST(request) {
+// You can add other HTTP methods here if needed
+export async function GET() {
+  await dbConnect();
+
   try {
-    await dbConnect();
-
-    const body = await request.json();
-    const newArtist = await Artist.create(body);
-
-    return NextResponse.json({ success: true, data: newArtist });
+    const artists = await Artist.find({}).populate('songs');
+    return NextResponse.json(artists);
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
 }
