@@ -8,18 +8,13 @@
 SimpleStream is a streaming app that allows users to perform CRUD operations via a REST API. The app includes a Home page, Playlist, and Artists sections.
 
 ## Technologies and Tools
-- !Emotion React
-- !Emotion Styled
-- !MUI Icons Material
-- !MUI Material
-- !Bootstrap
-- !Dotenv
-- !MongoDB
-- !Mongoose
-- !Next.js
-- !React
-- !React Bootstrap
-- !React DOM
+- ![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)
+- ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+- ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+- ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+- ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+- ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 ## Screenshots
 !Home Page
