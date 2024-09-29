@@ -1,11 +1,10 @@
-import Header from "@/app/components/Header"; // Adjust the import according to your structure
+import Header from "@/app/components/Header";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>SimpleStream</title> {/* You can include the title here */}
-        {/* Other head elements like meta tags can go here */}
+        <title>SimpleStream</title>
       </head>
       <body>
         <Header />

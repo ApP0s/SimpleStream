@@ -15,8 +15,18 @@ import {
   TableRow,
   Paper,
   Checkbox,
+  Typography,
+  Grid,
+  IconButton,
+  Box,
+  Tooltip,
 } from "@mui/material";
-import styles from "@/app/page.module.css";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import LyricsIcon from "@mui/icons-material/Lyrics";
+import AddReactionIcon from "@mui/icons-material/AddReaction";
+import GroupIcon from "@mui/icons-material/Group";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const PlaylistList = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -90,14 +100,12 @@ const PlaylistList = () => {
 
       if (response.ok) {
         const updatedPlaylist = await response.json();
-        console.log("Updated Playlist:", updatedPlaylist); // Log the updated playlist
-
         setPlaylists((prevPlaylists) =>
           prevPlaylists.map((playlist) =>
             playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
           )
         );
-        handleClose(); // Close modal after saving
+        handleClose();
       } else {
         console.error("Failed to update playlist");
       }
@@ -119,8 +127,8 @@ const PlaylistList = () => {
       if (response.ok) {
         const newPlaylist = await response.json();
         setPlaylists((prev) => [...prev, newPlaylist]);
-        handleClose(); // Close modal after creating
-        setNewName(""); // Reset new name
+        handleClose();
+        setNewName("");
       } else {
         console.error("Failed to create playlist");
       }
@@ -128,6 +136,7 @@ const PlaylistList = () => {
       console.error("Error creating playlist:", error);
     }
   };
+
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`/api/playlists?id=${id}`, {
@@ -147,10 +156,10 @@ const PlaylistList = () => {
   };
 
   const handleAddSongsOpen = (playlist) => {
-    fetchSongs(); // Fetch songs when opening the modal
+    fetchSongs();
     setEditingPlaylist(playlist);
-    setSelectedSongs(playlist.songs || []); // Preselect current songs in playlist
-    setIsAddSongsOpen(true); // Open add songs modal
+    setSelectedSongs(playlist.songs || []);
+    setIsAddSongsOpen(true);
   };
 
   const handleAddSongsClose = () => {
@@ -172,7 +181,7 @@ const PlaylistList = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ songs: selectedSongs }), // Send updated songs array
+        body: JSON.stringify({ songs: selectedSongs }),
       });
 
       if (response.ok) {
@@ -182,7 +191,7 @@ const PlaylistList = () => {
             playlist._id === updatedPlaylist._id ? updatedPlaylist : playlist
           )
         );
-        handleAddSongsClose(); // Close modal after saving
+        handleAddSongsClose();
       } else {
         console.error("Failed to update playlist");
       }
@@ -192,13 +201,15 @@ const PlaylistList = () => {
   };
 
   return (
-    <div className={styles.playlistContainer}>
-      <h2>Playlists</h2>
+    <Box sx={{ padding: "20px" }}>
+      <Typography variant="h4" gutterBottom>
+        Playlists
+      </Typography>
       <Button
         variant="contained"
-        color="primary"
+        startIcon={<AddCircleOutlineIcon />}
         onClick={handleCreateOpen}
-        style={{ marginBottom: "16px" }}
+        sx={{ marginBottom: "16px" }}
       >
         Create Playlist
       </Button>
@@ -207,10 +218,12 @@ const PlaylistList = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <strong>Name</strong>
+                <Typography variant="h6">
+                  Playlist Name <GroupIcon />
+                </Typography>
               </TableCell>
               <TableCell align="right">
-                <strong>Actions</strong>
+                <Typography variant="h6">Actions</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -220,34 +233,36 @@ const PlaylistList = () => {
                 <TableRow key={playlist._id}>
                   <TableCell>
                     <Link href={`/playlists/${playlist._id}`}>
-                      {playlist.name}
-                    </Link>{" "}
-                    {/* Make name a link */}
+                      <Typography variant="body1" color="primary">
+                        {playlist.name}
+                      </Typography>
+                    </Link>
                   </TableCell>
                   <TableCell align="right">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => handleEditOpen(playlist)}
-                      style={{ marginRight: "8px" }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => handleDelete(playlist._id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="default"
-                      onClick={() => handleAddSongsOpen(playlist)} // Open add songs modal
-                      style={{ marginLeft: "8px" }}
-                    >
-                      Add Songs
-                    </Button>
+                    <Tooltip title="Edit Playlist">
+                      <IconButton
+                        color="primary"
+                        onClick={() => handleEditOpen(playlist)}
+                      >
+                        <BorderColorIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete Playlist">
+                      <IconButton
+                        color="secondary"
+                        onClick={() => handleDelete(playlist._id)}
+                      >
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Add Songs">
+                      <IconButton
+                        color="default"
+                        onClick={() => handleAddSongsOpen(playlist)}
+                      >
+                        <LyricsIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -295,15 +310,17 @@ const PlaylistList = () => {
       <Dialog open={isAddSongsOpen} onClose={handleAddSongsClose}>
         <DialogTitle>Add Songs to Playlist</DialogTitle>
         <DialogContent>
-          {songs.map((song) => (
-            <div key={song._id}>
-              <Checkbox
-                checked={selectedSongs.includes(song._id)}
-                onChange={() => handleSongSelect(song._id)}
-              />
-              {song.title} by {song.artist}
-            </div>
-          ))}
+          <Grid container spacing={2}>
+            {songs.map((song) => (
+              <Grid item xs={12} key={song._id}>
+                <Checkbox
+                  checked={selectedSongs.includes(song._id)}
+                  onChange={() => handleSongSelect(song._id)}
+                />
+                {song.title} - {song.artist}
+              </Grid>
+            ))}
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddSongsClose} color="primary">
@@ -314,7 +331,7 @@ const PlaylistList = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

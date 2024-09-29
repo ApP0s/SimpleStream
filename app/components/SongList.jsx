@@ -13,8 +13,30 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Rating,
 } from "@mui/material";
-import styles from "@/app/page.module.css";
+import { styled } from "@mui/material/styles";
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
+
+// Custom styled rating
+const StyledRating = styled(({ ...props }) => (
+  <Rating {...props} />
+))({
+  '& .MuiRating-iconFilled': {
+    color: '#ff6d75',
+  },
+  '& .MuiRating-iconHover': {
+    color: '#ff3d47',
+  },
+});
 
 const SongList = () => {
   const [songs, setSongs] = useState([]);
@@ -26,6 +48,13 @@ const SongList = () => {
     album: "",
     year: "",
   });
+  const [ratings, setRatings] = useState({});
+
+  // Load ratings from local storage when the component mounts
+  useEffect(() => {
+    const savedRatings = JSON.parse(localStorage.getItem("songRatings")) || {};
+    setRatings(savedRatings);
+  }, []);
 
   // Fetch songs from the API
   useEffect(() => {
@@ -58,6 +87,17 @@ const SongList = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRatingChange = (songId, newValue) => {
+    const updatedRatings = {
+      ...ratings,
+      [songId]: newValue,
+    };
+
+    setRatings(updatedRatings);
+    // Save ratings to local storage
+    localStorage.setItem("songRatings", JSON.stringify(updatedRatings));
   };
 
   const handleSubmit = async (e) => {
@@ -110,18 +150,19 @@ const SongList = () => {
         variant="contained"
         color="primary"
         onClick={() => handleOpen()}
-        sx={{ margin: 2 }} // Adds margin around the button
+        sx={{ margin: 2 }}
       >
         Add Song
       </Button>
-      <TableContainer component={Paper} className={styles.container}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="song list table">
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Artist</TableCell>
-              <TableCell>Year</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align="left" style={{ width: '30%' }}>Title<LibraryMusicIcon /></TableCell>
+              <TableCell align="left" style={{ width: '25%' }}>Artist<AccountCircleRoundedIcon /></TableCell>
+              <TableCell align="center" style={{ width: '10%' }}>Year<CalendarMonthIcon /></TableCell>
+              <TableCell align="center" style={{ width: '20%' }}>Actions<AddReactionIcon /></TableCell>
+              <TableCell align="center" style={{ width: '15%' }}>Rating<ThumbsUpDownIcon /></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -138,22 +179,35 @@ const SongList = () => {
                       variant="contained"
                       color="secondary"
                       onClick={() => handleOpen(song)}
+                      sx={{ marginRight: 1 }}
                     >
-                      Edit
+                      Edit<BorderColorIcon />
                     </Button>
                     <Button
                       variant="contained"
                       color="error"
                       onClick={() => handleDelete(song._id)}
                     >
-                      Delete
+                      Delete<DeleteOutlineIcon />
                     </Button>
+                  </TableCell>
+                  <TableCell>
+                    <StyledRating
+                      name={`rating-${song._id}`}
+                      value={ratings[song._id] || 2}  // Default value if no rating
+                      precision={0.5}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      onChange={(event, newValue) => {
+                        handleRatingChange(song._id, newValue);
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={5} align="center">
                   No songs available
                 </TableCell>
               </TableRow>
