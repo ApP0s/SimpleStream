@@ -53,7 +53,6 @@ const PlaylistList = () => {
 
   useEffect(() => {
     fetchPlaylists();
-    fetchSongs();
   }, []);
 
   const handleEditOpen = (playlist) => {
