@@ -147,6 +147,7 @@ const PlaylistList = () => {
   };
 
   const handleAddSongsOpen = (playlist) => {
+    fetchSongs(); // Fetch songs when opening the modal
     setEditingPlaylist(playlist);
     setSelectedSongs(playlist.songs || []); // Preselect current songs in playlist
     setIsAddSongsOpen(true); // Open add songs modal
