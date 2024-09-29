@@ -17,16 +17,33 @@ SimpleStream is a streaming app that allows users to perform CRUD operations via
 - ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 ## Screenshots
-!Home Page
-!Playlist Page
-!Artists Page
+![Home Page](./screenshots/homepage.png)
+![Playlist Page](./screenshots/playlistpage.png)
+![Artists Page](./screenshots/artistspage.png)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+First, Clone the repo:
 
+```bash
+git clone https://github.com/ApP0s/SimpleStream.git
+
+```
+Second, install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+
+```
+
+Third, run the server:
 ```bash
 npm run dev
 # or
@@ -35,6 +52,7 @@ yarn dev
 pnpm dev
 # or
 bun dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
